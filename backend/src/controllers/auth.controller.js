@@ -1,5 +1,6 @@
 const bcrypt = require("bcrypt");
 const pool = require("../config/db");
+// const { company, role, follow_up_date } = req.body;
 
 const register = async (req, res) => {
   try {
