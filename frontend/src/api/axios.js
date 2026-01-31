@@ -10,7 +10,8 @@
 import axios from "axios";
 
 const api = axios.create({
-  baseURL: "https://careerflow-backend-oy7i.onrender.com/api",
+//   baseURL: "https://careerflow-backend-oy7i.onrender.com/api",
+baseURL: "http://localhost:5000/api",
 });
 
 api.interceptors.request.use((config) => {
