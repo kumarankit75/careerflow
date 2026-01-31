@@ -4,7 +4,7 @@ CareerFlow is a full-stack SaaS-style job application tracker that helps users m
 It includes authentication, job tracking, workflow management with a Kanban board, and analytics — all deployed to production.
 
 🌐 Live App:
-👉 Frontend: https://careerflow-lac.vercel.app/dashboard
+👉 Frontend: https://careerflow-lac.vercel.app/ 
 👉 Backend API: https://careerflow-backend-oy7i.onrender.com
 
 ✨ Features
