@@ -1,0 +1,511 @@
+// import { useEffect, useState } from "react";
+// import api from "../api/axios";
+// import { useNavigate } from "react-router-dom";
+
+// function Dashboard() {
+//   const [user, setUser] = useState(null);
+//   const navigate = useNavigate();
+// const [jobs, setJobs] = useState([]);
+// const [company, setCompany] = useState("");
+// const [role, setRole] = useState("");
+// const [loading, setLoading] = useState(false);
+// const STATUS_OPTIONS = ["APPLIED", "INTERVIEW", "OFFER", "REJECTED"];
+
+
+// //   useEffect(() => {
+// //     const fetchUser = async () => {
+// //       try {
+// //         const res = await api.get("/users/me");
+// //         setUser(res.data);
+// //       } catch (err) {
+// //         // token invalid / expired
+// //         localStorage.removeItem("token");
+// //         navigate("/login");
+// //       }
+// //     };
+
+// //     fetchUser();
+// //   }, [navigate]);
+
+
+// useEffect(() => {
+//   const fetchData = async () => {
+//     try {
+//       const userRes = await api.get("/users/me");
+//       setUser(userRes.data);
+
+//       const jobsRes = await api.get("/jobs");
+//       setJobs(jobsRes.data);
+//     } catch (err) {
+//       localStorage.removeItem("token");
+//       navigate("/login");
+//     }
+//   };
+
+//   fetchData();
+// }, [navigate]);
+
+
+
+
+
+//   const handleLogout = () => {
+//     localStorage.removeItem("token");
+//     navigate("/login");
+//   };
+
+//   if (!user) {
+//     return (
+//       <div className="h-screen flex items-center justify-center">
+//         Loading...
+//       </div>
+//     );
+//   }
+
+
+
+
+// const statusColor = (status) => {
+//   switch (status) {
+//     case "APPLIED":
+//       return "bg-blue-100 text-blue-700";
+//     case "INTERVIEW":
+//       return "bg-yellow-100 text-yellow-700";
+//     case "OFFER":
+//       return "bg-green-100 text-green-700";
+//     case "REJECTED":
+//       return "bg-red-100 text-red-700";
+//     default:
+//       return "bg-gray-100 text-gray-700";
+//   }
+// };
+
+
+// const handleAddJob = async (e) => {
+//   e.preventDefault();
+//   if (!company || !role) return;
+
+//   setLoading(true);
+//   try {
+//     const res = await api.post("/jobs", {
+//       company,
+//       role,
+//     });
+
+//     setJobs([res.data.job, ...jobs]);
+//     setCompany("");
+//     setRole("");
+//   } catch (err) {
+//     console.error("Add job failed");
+//   } finally {
+//     setLoading(false);
+//   }
+// };
+
+// const handleDeleteJob = async (id) => {
+//   try {
+//     await api.delete(`/jobs/${id}`);
+//     setJobs(jobs.filter((job) => job.id !== id));
+//   } catch (err) {
+//     console.error("Delete failed");
+//   }
+// };
+
+
+
+
+// const handleStatusChange = async (jobId, newStatus) => {
+//   try {
+//     const res = await api.put(`/jobs/${jobId}/status`, {
+//       status: newStatus,
+//     });
+
+//     setJobs(
+//       jobs.map((job) =>
+//         job.id === jobId ? res.data.job : job
+//       )
+//     );
+//   } catch (err) {
+//     console.error("Status update failed");
+//   }
+// };
+
+
+
+
+//   return (
+//     <div className="min-h-screen bg-gray-100 p-6">
+//       <div className="max-w-4xl mx-auto bg-white p-6 rounded shadow">
+//         <div className="flex justify-between items-center mb-6">
+//           <h1 className="text-2xl font-bold">
+//             Welcome, {user.name} 👋
+//           </h1>
+//           <button
+//             onClick={handleLogout}
+//             className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600"
+//           >
+//             Logout
+//           </button>
+//         </div>
+
+//         <p className="text-gray-600">
+//           This is your CareerFlow dashboard.
+//         </p>
+//       </div>
+    
+
+//     <div className="mt-6">
+//         <div className="mb-6 border p-4 rounded bg-gray-50">
+//   <h2 className="font-semibold mb-3">Add New Job</h2>
+
+//   <form onSubmit={handleAddJob} className="flex gap-3 flex-wrap">
+//     <input
+//       type="text"
+//       placeholder="Company"
+//       value={company}
+//       onChange={(e) => setCompany(e.target.value)}
+//       className="border px-3 py-2 rounded w-full md:w-auto"
+//     />
+
+//     <input
+//       type="text"
+//       placeholder="Role"
+//       value={role}
+//       onChange={(e) => setRole(e.target.value)}
+//       className="border px-3 py-2 rounded w-full md:w-auto"
+//     />
+
+//     <button
+//       type="submit"
+//       disabled={loading}
+//       className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 disabled:opacity-50"
+//     >
+//       {loading ? "Adding..." : "Add Job"}
+//     </button>
+//   </form>
+// </div>
+//   <h2 className="text-xl font-semibold mb-4">Your Jobs</h2>
+
+
+//   {jobs.length === 0 ? (
+//     <p className="text-gray-500">No jobs added yet.</p>
+//   ) : (
+//     <div className="space-y-3">
+//       {jobs.map((job) => (
+//         <div
+//           key={job.id}
+//           className="flex justify-between items-center border p-4 rounded"
+//         >
+//           <div>
+//             <h3 className="font-semibold">
+//               {job.role} @ {job.company}
+//             </h3>
+//             <p className="text-sm text-gray-500">
+//               Applied: {job.applied_date || "—"}
+//             </p>
+//           </div>
+
+//           {/* <span
+//             className={`px-3 py-1 rounded-full text-sm font-medium ${statusColor(
+//               job.status
+//             )}`}
+//           >
+//             {job.status}
+//           </span> */}
+
+//             <div className="flex items-center gap-3">
+//   {/* <span
+//     className={`px-3 py-1 rounded-full text-sm font-medium ${statusColor(
+//       job.status
+//     )}`}
+//   >
+//     {job.status}
+//   </span> */}
+
+//         <select
+//   value={job.status}
+//   onChange={(e) =>
+//     handleStatusChange(job.id, e.target.value)
+//   }
+//   className={`px-3 py-1 rounded-full text-sm font-medium cursor-pointer ${statusColor(
+//     job.status
+//   )}`}
+// >
+//   {STATUS_OPTIONS.map((status) => (
+//     <option key={status} value={status}>
+//       {status}
+//     </option>
+//   ))}
+// </select>
+
+
+
+//   <button
+//     onClick={() => handleDeleteJob(job.id)}
+//     className="text-red-500 hover:text-red-700 text-sm"
+//   >
+//     Delete
+//   </button>
+// </div>
+
+
+
+//         </div>
+//       ))}
+//     </div>
+//   )}
+// </div>
+
+//     </div>
+// );
+// }
+
+// export default Dashboard;
+
+
+
+
+import { useEffect, useState } from "react";
+import api from "../api/axios";
+import { useNavigate } from "react-router-dom";
+import KanbanBoard from "../components/KanbanBoard";
+import JobAnalytics from "../components/JobAnalytics";
+
+const STATUS_OPTIONS = ["APPLIED", "INTERVIEW", "OFFER", "REJECTED"];
+
+function Dashboard() {
+  const [user, setUser] = useState(null);
+  const [jobs, setJobs] = useState([]);
+
+  const [company, setCompany] = useState("");
+  const [role, setRole] = useState("");
+  const [loading, setLoading] = useState(false);
+
+  const navigate = useNavigate();
+
+  // Fetch user + jobs
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const userRes = await api.get("/users/me");
+        setUser(userRes.data);
+
+        const jobsRes = await api.get("/jobs");
+        setJobs(jobsRes.data);
+      } catch (err) {
+        localStorage.removeItem("token");
+        navigate("/login");
+      }
+    };
+
+    fetchData();
+  }, [navigate]);
+
+  // Add job
+  const handleAddJob = async (e) => {
+    e.preventDefault();
+    if (!company || !role) return;
+
+    setLoading(true);
+    try {
+      const res = await api.post("/jobs", {
+        company,
+        role,
+      });
+
+      setJobs([res.data.job, ...jobs]);
+      setCompany("");
+      setRole("");
+    } catch (err) {
+      console.error("Add job failed");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // Delete job
+  const handleDeleteJob = async (id) => {
+    try {
+      await api.delete(`/jobs/${id}`);
+      setJobs(jobs.filter((job) => job.id !== id));
+    } catch (err) {
+      console.error("Delete job failed");
+    }
+  };
+
+  // Update status
+  const handleStatusChange = async (jobId, newStatus) => {
+    try {
+      const res = await api.put(`/jobs/${jobId}/status`, {
+        status: newStatus,
+      });
+
+      setJobs(
+        jobs.map((job) =>
+          job.id === jobId ? res.data.job : job
+        )
+      );
+    } catch (err) {
+      console.error("Status update failed");
+    }
+  };
+
+  // Logout
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    navigate("/login");
+  };
+
+  const statusColor = (status) => {
+    switch (status) {
+      case "APPLIED":
+        return "bg-blue-100 text-blue-700";
+      case "INTERVIEW":
+        return "bg-yellow-100 text-yellow-700";
+      case "OFFER":
+        return "bg-green-100 text-green-700";
+      case "REJECTED":
+        return "bg-red-100 text-red-700";
+      default:
+        return "bg-gray-100 text-gray-700";
+    }
+  };
+
+  if (!user) {
+    return (
+      <div className="h-screen flex items-center justify-center">
+        Loading...
+      </div>
+    );
+  }
+
+  return (
+    <div className="min-h-screen bg-gray-100 p-6">
+      <div className="max-w-5xl mx-auto bg-white p-6 rounded shadow">
+        {/* Header */}
+        <div className="flex justify-between items-center mb-6">
+          <h1 className="text-2xl font-bold">
+            Welcome, {user.name} 👋
+          </h1>
+          <button
+            onClick={handleLogout}
+            className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600"
+          >
+            Logout
+          </button>
+        </div>
+
+        {/* Add Job */}
+        <div className="mb-6 border p-4 rounded bg-gray-50">
+          <h2 className="font-semibold mb-3">Add New Job</h2>
+
+          <form
+            onSubmit={handleAddJob}
+            className="flex gap-3 flex-wrap"
+          >
+            <input
+              type="text"
+              placeholder="Company"
+              value={company}
+              onChange={(e) => setCompany(e.target.value)}
+              className="border px-3 py-2 rounded w-full md:w-auto"
+            />
+
+            <input
+              type="text"
+              placeholder="Role"
+              value={role}
+              onChange={(e) => setRole(e.target.value)}
+              className="border px-3 py-2 rounded w-full md:w-auto"
+            />
+
+            <button
+              type="submit"
+              disabled={loading}
+              className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 disabled:opacity-50"
+            >
+              {loading ? "Adding..." : "Add Job"}
+            </button>
+          </form>
+        </div>
+
+        {/* Jobs List */}
+        <div>
+          <h2 className="text-xl font-semibold mb-4">
+            Your Jobs
+          </h2>
+
+          {jobs.length === 0 ? (
+            <p className="text-gray-500">
+              No jobs added yet.
+            </p>
+          ) : (
+            <div className="space-y-3">
+              {jobs.map((job) => (
+                <div
+                  key={job.id}
+                  className="flex justify-between items-center border p-4 rounded"
+                >
+                  <div>
+                    <h3 className="font-semibold">
+                      {job.role} @ {job.company}
+                    </h3>
+                    <p className="text-sm text-gray-500">
+                      Applied: {job.applied_date || "—"}
+                    </p>
+                  </div>
+
+                  <div className="flex items-center gap-3">
+                    <select
+                      value={job.status}
+                      onChange={(e) =>
+                        handleStatusChange(
+                          job.id,
+                          e.target.value
+                        )
+                      }
+                      className={`px-3 py-1 rounded-full text-sm font-medium cursor-pointer ${statusColor(
+                        job.status
+                      )}`}
+                    >
+                      {STATUS_OPTIONS.map((status) => (
+                        <option
+                          key={status}
+                          value={status}
+                        >
+                          {status}
+                        </option>
+                      ))}
+                    </select>
+
+                    <button
+                      onClick={() =>
+                        handleDeleteJob(job.id)
+                      }
+                      className="text-red-500 hover:text-red-700 text-sm"
+                    >
+                      Delete
+                    </button>
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+
+{/* Kanban Board */}
+<KanbanBoard
+  jobs={jobs}
+  onStatusChange={handleStatusChange}
+/>
+
+{/* Analytics */}
+<JobAnalytics jobs={jobs} />
+
+
+      </div>
+    </div>
+  );
+}
+
+export default Dashboard;
